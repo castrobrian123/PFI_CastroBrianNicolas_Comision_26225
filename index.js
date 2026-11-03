@@ -1,4 +1,5 @@
 
+import { verificarToken } from "./src/middlewares/auth.middleware.js";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Conectar rutas
-app.use("/api/products", productsRoutes);
+app.use("/api/products", verificarToken, productsRoutes);
 app.use("/auth", authRoutes);
 
 // Ruta principal
