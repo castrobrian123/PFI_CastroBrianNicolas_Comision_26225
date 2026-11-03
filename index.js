@@ -35,9 +35,15 @@ app.use((req, res) => {
     });
 });
 
-// Iniciar servidor
-const PORT = process.env.PORT || 3000;
+// Exportar aplicación para Vercel
+export default app;
 
-app.listen(PORT, () => {
-    console.log(`Servidor funcionando en http://localhost:${PORT}`);
-});
+// Iniciar servidor local
+if (process.env.NODE_ENV !== "production") {
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, () => {
+        console.log(`Servidor funcionando en http://localhost:${PORT}`);
+    });
+}
+
