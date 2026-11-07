@@ -46,19 +46,21 @@ export const getProducto = async (req, res) => {
 // Crear producto
 export const postProducto = async (req, res) => {
     try {
+
         const datos = req.body;
 
         if (
             !datos.nombre ||
-            datos.precio == null ||
-            datos.stock == null
+            typeof datos.precio !== "number" ||
+            typeof datos.stock !== "number"
         ) {
             return res.status(400).json({
-                error: "Faltan datos obligatorios"
+                error: "Datos inválidos"
             });
         }
 
-        const nuevoProducto = await crearProducto(datos);
+        const nuevoProducto =
+            await crearProducto(datos);
 
         res.status(201).json({
             mensaje: "Producto creado correctamente",
@@ -66,6 +68,7 @@ export const postProducto = async (req, res) => {
         });
 
     } catch (error) {
+
         res.status(500).json({
             error: "Error al crear el producto"
         });

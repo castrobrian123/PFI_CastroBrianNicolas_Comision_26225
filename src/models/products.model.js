@@ -1,23 +1,39 @@
 
 import db from "../config/firebase.js";
 
-const coleccion = db.collection("products");
+import {
+    collection,
+    getDocs,
+    getDoc,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
+} from "firebase/firestore";
 
-// Obtener todos los productos
+const coleccion = collection(db, "products");
+
 export const obtenerTodos = async () => {
-    const snapshot = await coleccion.get();
 
-    return snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
+    const snapshot = await getDocs(coleccion);
+
+    return snapshot.docs.map((documento) => ({
+        id: documento.id,
+        ...documento.data()
     }));
 };
 
-// Obtener producto por ID
 export const obtenerPorId = async (id) => {
-    const documento = await coleccion.doc(id).get();
 
-    if (!documento.exists) {
+    const referencia = doc(
+        db,
+        "products",
+        id
+    );
+
+    const documento = await getDoc(referencia);
+
+    if (!documento.exists()) {
         return null;
     }
 
@@ -27,9 +43,12 @@ export const obtenerPorId = async (id) => {
     };
 };
 
-// Crear producto
 export const crear = async (datos) => {
-    const nuevoDocumento = await coleccion.add(datos);
+
+    const nuevoDocumento = await addDoc(
+        coleccion,
+        datos
+    );
 
     return {
         id: nuevoDocumento.id,
@@ -37,17 +56,21 @@ export const crear = async (datos) => {
     };
 };
 
-// Actualizar producto
 export const actualizar = async (id, datos) => {
-    const documento = coleccion.doc(id);
 
-    const existe = await documento.get();
+    const referencia = doc(
+        db,
+        "products",
+        id
+    );
 
-    if (!existe.exists) {
+    const existe = await getDoc(referencia);
+
+    if (!existe.exists()) {
         return null;
     }
 
-    await documento.update(datos);
+    await updateDoc(referencia, datos);
 
     return {
         id,
@@ -56,17 +79,21 @@ export const actualizar = async (id, datos) => {
     };
 };
 
-// Eliminar producto
 export const eliminar = async (id) => {
-    const documento = coleccion.doc(id);
 
-    const existe = await documento.get();
+    const referencia = doc(
+        db,
+        "products",
+        id
+    );
 
-    if (!existe.exists) {
+    const existe = await getDoc(referencia);
+
+    if (!existe.exists()) {
         return false;
     }
 
-    await documento.delete();
+    await deleteDoc(referencia);
 
     return true;
 };
