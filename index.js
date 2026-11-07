@@ -31,15 +31,15 @@ app.use((req, res) => {
     });
 });
 
-export default app;
+const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== "production") {
-    const PORT = process.env.PORT || 3000;
-
     app.listen(PORT, () => {
         console.log(
             `Servidor funcionando en http://localhost:${PORT}`
         );
     });
 }
+
+export default app;
 
