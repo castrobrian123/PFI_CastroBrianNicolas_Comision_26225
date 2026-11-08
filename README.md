@@ -21,6 +21,12 @@ por ultimo envia
 
 esto nos entregara el TOKEN
 
+    {
+        "mensaje": "Inicio de sesión exitoso",
+        "token": "EL_TOKEN123",
+        "tipo": "Bearer"
+    }
+
 luego vamos a la pestaña de Headers
 
 y creamos una llave(key) de Authorizacion de valor(value):
@@ -30,6 +36,8 @@ Bearer EL_TOKEN_SIN_COMILLAS
 y creamos una llave(key) de Content-Type de valor(value):
 
 application/json
+
+![el_token](./las_imagenes/comoInsertarToken.png)
 
 ahora podremos obtener todos los productos que esten en la api
 
@@ -138,8 +146,18 @@ para borrar un producto por su ID
 
 enviamos la solicitud
 
-DELETE https://pfi-castro-brian-nicolas-comision-2.vercel.app/api/products/XBwp5R76qqA6ftRS2R8L
+DELETE https://pfi-castro-brian-nicolas-comision-2.vercel.app/api/products/xGI4cyGPwQ4UEcTY9gWn
+
+y nos devolvera el mensaje
+
+    {
+        "mensaje": "Producto eliminado correctamente"
+    }
 
 y al hacer el una solicitud GET https://pfi-castro-brian-nicolas-comision-2.vercel.app/api/products
 
 ya no encontraremos el producto por que ya fue eliminado
+
+    {
+        "error": "Producto no encontrado"
+    }
