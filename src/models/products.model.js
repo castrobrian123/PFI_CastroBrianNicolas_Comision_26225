@@ -1,15 +1,7 @@
 
 import db from "../config/firebase.js";
 
-import {
-    collection,
-    getDocs,
-    getDoc,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc
-} from "firebase/firestore";
+import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
 
 const coleccion = collection(db, "products");
 
@@ -21,6 +13,7 @@ export const obtenerTodos = async () => {
         id: documento.id,
         ...documento.data()
     }));
+
 };
 
 export const obtenerPorId = async (id) => {
@@ -41,6 +34,7 @@ export const obtenerPorId = async (id) => {
         id: documento.id,
         ...documento.data()
     };
+
 };
 
 export const crear = async (datos) => {
@@ -54,6 +48,7 @@ export const crear = async (datos) => {
         id: nuevoDocumento.id,
         ...datos
     };
+
 };
 
 export const actualizar = async (id, datos) => {
@@ -77,6 +72,7 @@ export const actualizar = async (id, datos) => {
         ...existe.data(),
         ...datos
     };
+
 };
 
 export const eliminar = async (id) => {
@@ -96,5 +92,6 @@ export const eliminar = async (id) => {
     await deleteDoc(referencia);
 
     return true;
+
 };
 

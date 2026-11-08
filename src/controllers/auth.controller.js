@@ -6,14 +6,12 @@ export const login = (req, res) => {
 
     const { usuario, password } = req.body;
 
-    // Validar que se enviaron los datos
     if (!usuario || !password) {
         return res.status(400).json({
             error: "Debes ingresar usuario y contraseña"
         });
     }
 
-    // Validar credenciales
     const usuarioValido = validarUsuario(usuario, password);
 
     if (!usuarioValido) {
@@ -22,18 +20,17 @@ export const login = (req, res) => {
         });
     }
 
-    // Generar token JWT
     const token = jwt.sign(
         { usuario: usuario },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
     );
 
-    // Devolver token
     res.status(200).json({
         mensaje: "Inicio de sesión exitoso",
         token: token,
         tipo: "Bearer"
     });
+
 };
 

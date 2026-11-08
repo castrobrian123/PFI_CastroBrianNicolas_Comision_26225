@@ -13,10 +13,7 @@ export const verificarToken = (req, res, next) => {
 
     const partes = authHeader.split(" ");
 
-    if (
-        partes.length !== 2 ||
-        partes[0] !== "Bearer"
-    ) {
+    if ( partes.length !== 2 || partes[0] !== "Bearer" ) {
         return res.status(401).json({
             error: "Formato de token inválido"
         });
@@ -40,6 +37,8 @@ export const verificarToken = (req, res, next) => {
         return res.status(403).json({
             error: "Token inválido o expirado"
         });
+
     }
+
 };
 
